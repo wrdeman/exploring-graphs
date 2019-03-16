@@ -8,6 +8,15 @@ from preprocess import txt_to_csv, get_category_names
 
 
 def get_driver():
+    """get_driver
+    get an instance of the neo4j neobolt driver
+
+    The neo4j image starts with a username/password neo4j/neo4j. However,
+    one is required to change the password before making any requests.
+
+    So we try to connect with our 'test' password - on failure we then try ro
+    change the default password
+    """
     uri = "bolt://db:7687"
     uname = 'neo4j'
     pword = 'test'
@@ -56,10 +65,16 @@ CREATE (category:Category { name: line[1], id: toInt(line[0])})
 """
 
 
-def create_index(driver, query):
+def create(driver, query):
+    """create_index
+
+    run query on neo4j and exit application if it fails
+
+    :param driver: neo4j driver object
+    :param query: cypher query string
+    """
     # LOAD PAGE NAMES
     with driver.session() as session:
-        # create  page with constraint
         try:
             session.run(query)
             session.close()
@@ -69,7 +84,13 @@ def create_index(driver, query):
 
 
 def load_pages(driver):
-    # get pages and convert to csv
+    """load_pages
+    Load the page data - id, name. First step is to create a csv that is
+    formatted for the neo4j load csv endpoint. Whatever happens we remove the
+    csv file at the end
+
+    :param driver: neo4j driver
+    """
     csv_fname = txt_to_csv(
         '/data/wiki-topcats-page-names.txt',
         quote=True,
@@ -82,22 +103,19 @@ def load_pages(driver):
         except Exception as e:
             print(e)
         finally:
-            # clean up
             if os.path.exists(csv_fname):
                 pass
                 os.remove(csv_fname)
 
 
-def load_page_links(self):
-    with driver.session() as session:
-        try:
-            session.run(COMMIT_PAGE_LINKS)
-            session.close()
-        except Exception as e:
-            print(e)
-
-
 def load_categories(driver):
+    """load_categories
+    Load the category data - id, name. First step is to create a csv that is
+    formatted for the neo4j load csv endpoint. Whatever happens we remove the
+    csv file at the end
+
+    :param driver: neo4j driver
+    """
     csv_fname = get_category_names(
         '/data/wiki-topcats-categories.txt',
         csv_fname='/data/wiki-topcats-categories-names.csv'
@@ -110,16 +128,19 @@ def load_categories(driver):
         except Exception as e:
             print(e)
         finally:
-            # clean up
             if os.path.exists(csv_fname):
                 pass
                 os.remove(csv_fname)
 
 
 if __name__ == "__main__":
+    # get the driver
     driver = get_driver()
-    # create_index(driver, CREATE_PAGE)
-    # load_pages(driver)
-    # load_page_links(driver)
-    create_index(driver, CREATE_CATEGORIES)
+    # pages
+    create(driver, CREATE_PAGE)
+    load_pages(driver)
+    # page links
+    create(driver, COMMIT_PAGE_LINKS)
+    # categories
+    create(driver, CREATE_CATEGORIES)
     load_categories(driver)

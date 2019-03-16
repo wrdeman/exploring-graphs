@@ -33,13 +33,26 @@ def is_connected(graph, node):
 
 
 def get_subgraphs(graph):
+    """get_subgraphs
+
+    for a given graph, starting at a random point then follow all the links
+    if the graph is connected the we are done and exit. if not trim the
+    original graph down to exclude the nodes visited, and test whether is
+    connected.
+
+    :param graph:
+    """
     def get_visible_node(graph):
+        """get_visible_node
+        get a node with the property visible = True
+        :param graph:
+        """
         for node in graph:
             if node.visited is False:
                 return node
         raise Exception("No visible node")
-    count = 0
 
+    count = 0
     while True:
         count += 1
 
@@ -55,5 +68,4 @@ def get_subgraphs(graph):
 
 if __name__ == "__main__":
     nodes = get_graph_list()
-
     print(get_subgraphs(nodes))
