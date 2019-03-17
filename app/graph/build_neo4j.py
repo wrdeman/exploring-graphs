@@ -4,7 +4,7 @@ import sys
 import neo4j
 from neobolt.exceptions import AuthError
 
-from preprocess import txt_to_csv, get_category_names
+from preprocess import txt_to_csv, get_category_names, get_category_links
 
 
 def get_driver():
@@ -64,6 +64,14 @@ LOAD CSV FROM 'file:///data/wiki-topcats-categories-names.csv' AS line
 CREATE (category:Category { name: line[1], id: toInt(line[0])})
 """
 
+COMMIT_CATEGORY_LINKS = """
+USING PERIODIC COMMIT
+LOAD CSV FROM 'file:///data/wiki-topcats-categories-links.csv' AS line
+MATCH(category1:Category {id: toInt(line[0])})
+MATCH(page1:Page {id: toInt(line[1])})
+CREATE (category1)-[:CATEGORIZES]->(page1)
+"""
+
 
 def create(driver, query):
     """create_index
@@ -92,7 +100,8 @@ def load_pages(driver):
     :param driver: neo4j driver
     """
     csv_fname = txt_to_csv(
-        '/data/wiki-topcats-page-names.txt',
+        '/data/wiki-topcats-page-names.txt.gz',
+        csv_fname='/data/wiki-topcats-page-names.csv',
         quote=True,
     )
 
@@ -108,7 +117,7 @@ def load_pages(driver):
                 os.remove(csv_fname)
 
 
-def load_categories(driver):
+def load_categories(driver, links=False):
     """load_categories
     Load the category data - id, name. First step is to create a csv that is
     formatted for the neo4j load csv endpoint. Whatever happens we remove the
@@ -116,14 +125,22 @@ def load_categories(driver):
 
     :param driver: neo4j driver
     """
-    csv_fname = get_category_names(
-        '/data/wiki-topcats-categories.txt',
-        csv_fname='/data/wiki-topcats-categories-names.csv'
-    )
+    if links:
+        csv_fname = get_category_links(
+            '/data/wiki-topcats-categories.txt.gz',
+            csv_fname='/data/wiki-topcats-categories-links.csv'
+        )
+        query = COMMIT_CATEGORY_LINKS
+    else:
+        csv_fname = get_category_names(
+            '/data/wiki-topcats-categories.txt.gz',
+            csv_fname='/data/wiki-topcats-categories-names.csv'
+        )
+        query = COMMIT_CATEGORY_NAMES
 
     with driver.session() as session:
         try:
-            session.run(COMMIT_CATEGORY_NAMES)
+            session.run(query)
             session.close()
         except Exception as e:
             print(e)
@@ -136,11 +153,12 @@ def load_categories(driver):
 if __name__ == "__main__":
     # get the driver
     driver = get_driver()
-    # pages
-    create(driver, CREATE_PAGE)
-    load_pages(driver)
-    # page links
-    create(driver, COMMIT_PAGE_LINKS)
-    # categories
-    create(driver, CREATE_CATEGORIES)
-    load_categories(driver)
+    # # pages
+    # create(driver, CREATE_PAGE)
+    # load_pages(driver)
+    # # page links
+    # create(driver, COMMIT_PAGE_LINKS)
+    # # categories
+    # create(driver, CREATE_CATEGORIES)
+    # load_categories(driver)
+    load_categories(driver, links=True)
