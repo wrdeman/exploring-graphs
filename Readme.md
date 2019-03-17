@@ -1,3 +1,8 @@
+# Exploring Wikipedia network of top categories dataset
+
+## Data
+Download data from [here](https://snap.stanford.edu/data/wiki-topcats.html) and put it in directory name data or run the bash script get_data.sh
+
 ## Step 1: 
 Start the containers
 ```
@@ -45,5 +50,3 @@ Run tests:
 ```
 docker-compose run app /usr/local/bin/pytest /app/graph/test_setup.py /app/graph/test_connected.py
 ```
-
-
