@@ -64,3 +64,4 @@ if __name__ == "__main__":
             line += "\n"
             f_results.write(line)
     f_results.close()
+    print('written to data/results_pages.txt')

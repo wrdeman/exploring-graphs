@@ -50,3 +50,4 @@ if __name__ == "__main__":
         for line in categories:
             writer.writerow(line)
     f.close()
+    print('written to data/results_connectivity.txt')
