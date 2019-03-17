@@ -1,0 +1,100 @@
+279122,United States,238607
+987583,France,89659
+541013,United Kingdom,70671
+230038,Canada,61843
+896828,Germany,57670
+121347,World War II,52999
+610154,Australia,47434
+98332,Italy,45775
+1055792,English language,45647
+82313,Association football,44103
+362517,Japan,42313
+1313469,Village,42112
+1313468,Poland,41779
+1313470,Voivodeships of Poland,41373
+1313471,Powiat,41370
+1313472,Gmina,41345
+1184551,Allmusic,40021
+987710,Departments of France,37465
+303904,New York,36925
+987709,Communes of France,36064
+1118496,India,35625
+446994,Spain,31243
+279121,Census,27707
+1457593,Russia,26639
+121348,World War I,25824
+978876,Paris,25344
+279118,Population density,24410
+279119,Marriage,24197
+1362343,Brazil,23499
+279115,United States Census Bureau,23120
+279116,Political divisions of the United States,22631
+279117,Federal Information Processing Standard,22078
+853552,Lepidoptera,21947
+1174967,Los Angeles,21286
+1039346,BBC,20605
+1684420,Mexico,20370
+1464928,Species,20241
+1179890,Guitar,20128
+279120,ZIP code,20125
+880439,New Zealand,18681
+1163759,Actor,18365
+1655802,China,18303
+853553,Moth,17735
+785921,Romania,17578
+1205255,Switzerland,17311
+187620,Ireland,16976
+386934,Major League Baseball,16677
+1169041,Soviet Union,16559
+280589,Pennsylvania,16405
+279123,Native American (U.S. Census),16305
+1400549,Democratic Party (United States),16248
+1387565,Chicago,16244
+1181014,Drum kit,15138
+195254,Norway,14966
+82636,Midfielder,14942
+1383396,South Africa,14719
+1643167,Argentina,14674
+138509,Austria,14422
+845238,Eudicots,14095
+1108125,Rome,14062
+870531,Asteroid,13950
+1214910,National Register of Historic Places,13907
+459249,Belgium,13870
+1545400,National Football League,13539
+1022390,Jazz,13484
+946976,Basketball,13432
+49755,Israel,13184
+243528,Florida,13118
+1184409,Billboard (magazine),12982
+519419,Philippines,12945
+1184538,The Guardian,12794
+1026895,Piano,12560
+1163476,Television,12323
+1184347,Billboard Hot 100,12320
+367035,Turkey,12067
+1595949,Country music,11970
+168957,Greece,11791
+1205356,French language,11720
+117472,United States Navy,11711
+1409704,Harvard University,11605
+846596,Plant,11603
+346549,Denmark,11571
+227544,Ice hockey,11548
+1613676,Toronto,11471
+239728,New Jersey,11413
+870589,Asteroid belt,11188
+1205354,Roman Catholic,11121
+370894,Finland,11105
+244646,Massachusetts,11025
+1406267,United States Army,10932
+279029,U.S. state,10928
+1163291,NBC,10916
+325482,Philadelphia,10741
+1400313,Virginia,10740
+117480,San Francisco,10719
+802740,Hungary,10557
+364585,Portugal,10458
+1609252,Quebec,10394
+492663,Moscow,10316
+1168735,Egypt,10174
