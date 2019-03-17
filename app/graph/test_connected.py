@@ -1,6 +1,8 @@
 import pytest
-from utils import add_to_node, Node, add_to_graph
+
 from connected import is_connected, get_subgraphs
+from paths import path_from_node, get_all_paths
+from utils import add_to_node, Node, add_to_graph
 
 
 def build_graph(adjacency_list):
@@ -108,3 +110,51 @@ def test_add_to_graph():
     assert sorted([n._id for n in nodes[1].linked_from]) == [0]
     assert sorted([n._id for n in nodes[2].linked_to]) == []
     assert sorted([n._id for n in nodes[2].linked_from]) == [0]
+
+
+def test_path():
+    adjacency_list = {
+        0: [1, 4],
+        1: [2, 4],
+        2: [3, 1],
+        3: [2, 4, 5],
+        4: [0, 1],
+        5: [3],
+    }
+    test = [
+        [5, 0],
+        [3, 1],
+        [2, 2],
+        [1, 3],
+        [4, 2],
+        [0, 3]
+    ]
+    graph = build_graph(adjacency_list)
+    node_start = graph[5]
+    graph = graph.values()
+    path_from_node(graph, node_start)
+
+    assert sorted([[g._id, g.path] for g in graph]) == sorted(test)
+
+
+def test_all_paths():
+    adjacency_list = {
+        0: [1, 4],
+        1: [2, 4],
+        2: [3, 1],
+        3: [2, 4, 5],
+        4: [0, 1],
+        5: [3],
+    }
+    test = [
+        [5, 0],
+        [3, 1],
+        [2, 2],
+        [1, 3],
+        [4, 2],
+        [0, 3]
+    ]
+    graph = build_graph(adjacency_list)
+    graph = graph.values()
+    paths = get_all_paths(graph)
+    assert sorted([[g._id, g.path] for g in graph]) == sorted(test)

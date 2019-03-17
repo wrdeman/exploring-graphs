@@ -1,8 +1,10 @@
 import gzip
+import math
 
 
 class Node(object):
     visited = False
+    path = math.inf  # work in progress ...
     """Node
     Object for a basic node. Contains an id, and a list of edges into and a
     list of edges out
