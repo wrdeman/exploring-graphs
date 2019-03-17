@@ -51,7 +51,7 @@ CREATE (page:Page { name: line[1], id: toInt(line[0])})
 
 COMMIT_PAGE_LINKS = """
 USING PERIODIC COMMIT
-LOAD CSV FROM 'file:///data/wiki-topcats.txt' AS line
+LOAD CSV FROM 'file:///data/wiki-topcats.txt.gz' AS line
 FIELDTERMINATOR " "
 MATCH(page1:Page {id: toInt(line[0])})
 MATCH(page2:Page {id: toInt(line[1])})
@@ -152,13 +152,20 @@ def load_categories(driver, links=False):
 
 if __name__ == "__main__":
     # get the driver
+    print("getting neo4j driver")
     driver = get_driver()
-    # # pages
-    # create(driver, CREATE_PAGE)
-    # load_pages(driver)
-    # # page links
-    # create(driver, COMMIT_PAGE_LINKS)
-    # # categories
-    # create(driver, CREATE_CATEGORIES)
-    # load_categories(driver)
+
+    # pages
+    print("create page")
+    create(driver, CREATE_PAGE)
+    print("load pages")
+    load_pages(driver)
+    print("load page links")
+    create(driver, COMMIT_PAGE_LINKS)
+    # categories
+    print("create category")
+    create(driver, CREATE_CATEGORIES)
+    print("load categories")
+    load_categories(driver)
+    print("load category links")
     load_categories(driver, links=True)

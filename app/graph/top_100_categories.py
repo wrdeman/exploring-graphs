@@ -1,4 +1,5 @@
 import csv
+import gzip
 from operator import itemgetter
 
 from utils import get_graph
@@ -23,23 +24,24 @@ if __name__ == "__main__":
     nodes = get_graph()
 
     categories = []
-    with open('/data/wiki-topcats-categories.txt') as f:
-        for row in f:
-            # get category and pages
-            # format "category; id id id .."
-            category, pages = row.split(";")
-            pages = pages.split(" ")
-            pages[-1] = pages[-1].replace("\n", "")
-            pages = [int(page) for page in pages if page != ""]
+    f = gzip.open('/data/wiki-topcats-categories.txt.gz', 'rt')
+    for row in f:
+        # get category and pages
+        # format "category; id id id .."
+        category, pages = row.split(";")
+        pages = pages.split(" ")
+        pages[-1] = pages[-1].replace("\n", "")
+        pages = [int(page) for page in pages if page != ""]
 
-            # for all the pages in the category count excluding pages outside
-            all_edges = []
-            for page in pages:
-                all_edges.extend(nodes[page].get_all_edges())
-            # intersection of all destination pages of the pages in the
-            # categories and all the pages in the category
-            count = len(set(all_edges) & set(pages))
-            categories.append([category, count])
+        # for all the pages in the category count excluding pages outside
+        all_edges = []
+        for page in pages:
+            all_edges.extend(nodes[page].get_all_edges())
+        # intersection of all destination pages of the pages in the
+        # categories and all the pages in the category
+        count = len(set(all_edges) & set(pages))
+        categories.append([category, count])
+    f.close()
 
     # write out results
     categories = sorted(categories, key=itemgetter(1), reverse=True)[:100]
