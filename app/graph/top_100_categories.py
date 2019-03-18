@@ -39,6 +39,7 @@ if __name__ == "__main__":
             all_edges.extend(nodes[page].get_all_edges())
         # intersection of all destination pages of the pages in the
         # categories and all the pages in the category
+        pages = [nodes[page] for page in pages]
         count = len(set(all_edges) & set(pages))
         categories.append([category, count])
     f.close()
